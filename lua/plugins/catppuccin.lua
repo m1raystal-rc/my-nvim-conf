@@ -45,18 +45,6 @@ return {
 				which_key = true,
 			},
 		},
-		-- 修正：config 不需要额外参数，opts 会自动传入
-		config = function()
-			-- opts 已经通过上面的 opts 字段自动应用了
-			-- 只需要强制覆盖背景透明
-			vim.defer_fn(function()
-				vim.api.nvim_set_hl(0, "Normal", { bg = "NONE" })
-				vim.api.nvim_set_hl(0, "NormalFloat", { bg = "NONE" })
-				vim.api.nvim_set_hl(0, "LineNr", { bg = "NONE" })
-				vim.api.nvim_set_hl(0, "CursorLine", { bg = "NONE" })
-				vim.api.nvim_set_hl(0, "CursorLineNr", { bg = "NONE" })
-			end, 50)
-		end,
 	},
 
 	{
