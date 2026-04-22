@@ -17,7 +17,7 @@ return {
 		keys = {
 			{ "<leader>ll", "<cmd>Leet<cr>", desc = "Open LeetCode" },
 			{ "<leader>lt", "<cmd>Leet test<cr>", desc = "Test Solution" },
-			{ "<leader>ls", "<cmd>Leet submit<cr>", desc = "Submit Solution" },
+			{ "<leader>lS", "<cmd>Leet submit<cr>", desc = "Submit Solution" },
 		},
 	},
 }

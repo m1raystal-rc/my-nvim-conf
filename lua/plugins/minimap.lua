@@ -1,9 +1,9 @@
 return {
 	{
-		"nvim-mini/mini.map", -- 新的仓库地址
+		"nvim-mini/mini.map",
 		version = false,
 		config = function()
-			require("mini.map").setup()
+			require("mini.map").setup({})
 
 			-- 自动显示
 			vim.api.nvim_create_autocmd("BufEnter", {

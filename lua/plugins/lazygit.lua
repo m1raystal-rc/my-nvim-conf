@@ -11,9 +11,7 @@ return {
 		"nvim-lua/plenary.nvim",
 	},
 	keys = {
-		-- 直接使用 LazyGitCurrentFile，它本来就设计为从当前文件目录开始
 		{ "<leader>lg", "<cmd>LazyGitCurrentFile<cr>", desc = "LazyGit (current file repo)" },
-		{ "<leader>lf", "<cmd>LazyGitCurrentFile<cr>", desc = "LazyGit (current file)" },
 	},
 	config = function()
 		vim.g.lazygit_floating_window_winblend = 15
