@@ -2,10 +2,9 @@
 -- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
 -- Add any additional keymaps here
 --
--- sniprun
-vim.keymap.set("n", "<leader>r", ":SnipRun<CR>", { desc = "Run current line" })
-vim.keymap.set("v", "<leader>r", ":SnipRun<CR>", { desc = "Run visual selection" })
-vim.keymap.set("n", "<leader>R", ":%SnipRun<CR>", { desc = "Run entire file" })
+--vim.keymap.set("n", "<leader>r", ":SnipRun<CR>", { desc = "Run current line" })
+--vim.keymap.set("v", "<leader>r", ":SnipRun<CR>", { desc = "Run visual selection" })
+--vim.keymap.set("n", "<leader>R", ":%SnipRun<CR>", { desc = "Run entire file" })
 
 --fix c+/ open terminal
 -- Map Ctrl+/ to open terminal
@@ -21,3 +20,5 @@ end, { desc = "Comment current line" })
 vim.keymap.set("v", "<C-\\>", function()
 	require("Comment.api").toggle.linewise(vim.fn.visualmode())
 end, { desc = "Comment visual selection" })
+
+vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { desc = "Rename" })

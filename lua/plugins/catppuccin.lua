@@ -14,7 +14,7 @@ return {
 				flash = true,
 				gitsigns = true,
 				headlines = true,
-				illuminate = true,
+				--illuminate = true,
 				indent_blankline = { enabled = true },
 				lazy = true,
 				lsp_trouble = true,

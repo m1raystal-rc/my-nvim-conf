@@ -6,7 +6,7 @@ vim.opt.softtabstop = 2
 vim.opt.shiftwidth = 2
 vim.opt.expandtab = false
 vim.opt.listchars = { tab = "|-", trail = "-" }
-vim.o.guifont = "CartographCF Nerd Font:style=Rugular:h10"
+--vim.o.guifont = "CartographCF Nerd Font:style=Rugular:h10"
 -- for nvide
 --vim.g.neovide_text_contrast = 0.8
 --vim.g.neovide_text_gamma = 1.4
