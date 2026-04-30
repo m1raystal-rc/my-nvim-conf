@@ -6,6 +6,9 @@ return {
 				symbols = {
 					filter = nil,
 				},
+				outline_window = {
+					width = 16,
+				},
 			})
 			vim.keymap.set("n", "<leader>ol", "<cmd>Outline<CR>", { desc = "Toggle Outline" })
 		end,

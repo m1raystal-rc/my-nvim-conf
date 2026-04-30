@@ -12,13 +12,15 @@ vim.keymap.set({ "n", "t" }, "<C-/>", function()
 	Snacks.terminal()
 end, { desc = "Open terminal" })
 
--- Map Ctrl+\ to toggle comments (replaces Ctrl+/)
-vim.keymap.set("n", "<C-\\>", function()
-	require("Comment.api").toggle.linewise.current()
-end, { desc = "Comment current line" })
-
-vim.keymap.set("v", "<C-\\>", function()
-	require("Comment.api").toggle.linewise(vim.fn.visualmode())
-end, { desc = "Comment visual selection" })
-
 vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { desc = "Rename" })
+
+require("mini.surround").setup({
+	mappings = {
+		add = "gsa",
+		delete = "gsd",
+		replace = "gsr",
+	},
+})
+
+vim.keymap.set("v", "<C-\\>", "gc", { desc = "Toggle comment on selection", remap = true })
+vim.keymap.set("n", "<C-\\>", "gcc", { desc = "Toggle comment current line", remap = true })
