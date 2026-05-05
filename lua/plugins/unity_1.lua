@@ -1,5 +1,13 @@
 return {
 	{
+		"folke/noice.nvim",
+		opts = {
+			cmdline = {
+				view = "cmdline",
+			},
+		},
+	},
+	{
 		"lewis6991/gitsigns.nvim",
 		event = "BufReadPost",
 		opts = {

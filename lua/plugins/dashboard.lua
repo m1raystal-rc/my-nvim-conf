@@ -40,7 +40,7 @@ return {
 					{
 						pane = 2,
 						section = "terminal",
-						cmd = "clear && fastfetch --logo-type small --structure 'Kernel:Uptime:CPU:GPU:Memory:Swap' --separator ' → ' --color-keys '#FFB7C5' --color-output '#FFB7C5' --logo-color-1 '#FFB7C5' --percent-type 10",
+						cmd = "clear && fastfetch --logo-type small --structure 'Kernel:Uptime:CPU:GPU:Memory:Swap' --separator ' → ' --color-keys '#FFB7C5' --color-output '#FFB7C5' --logo-color-1 '#FFB7C5' --percent-type 10 --key-type icon",
 						height = 9,
 						width = 80,
 						padding = 1,
