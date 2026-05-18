@@ -31,3 +31,5 @@ vim.api.nvim_create_autocmd("VimEnter", {
 		end
 	end,
 })
+
+vim.env.PATH = vim.env.PATH .. ":/home/m1racleur/.opencode/bin"

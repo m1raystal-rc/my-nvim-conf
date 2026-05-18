@@ -1,55 +1,27 @@
 return {
 	{
-		"catppuccin/nvim",
-		name = "catppuccin",
+		"rose-pine/neovim",
+		name = "rose-pine",
 		priority = 1000,
 		opts = {
-			flavour = "macchiato",
+			variant = "main",
+			dark_variant = "main",
 			transparent_background = true,
-			term_colors = true,
-			integrations = {
-				alpha = true,
-				cmp = true,
-				dashboard = true,
-				flash = true,
-				gitsigns = true,
-				headlines = true,
-				--illuminate = true,
-				indent_blankline = { enabled = true },
-				lazy = true,
-				lsp_trouble = true,
-				mason = true,
-				mini = true,
-				native_lsp = {
-					enabled = true,
-					virtual_text = {
-						errors = { "italic" },
-						hints = { "italic" },
-						warnings = { "italic" },
-						information = { "italic" },
-					},
-					underlines = {
-						errors = { "underline" },
-						hints = { "underline" },
-						warnings = { "underline" },
-						information = { "underline" },
-					},
-				},
-				navic = { enabled = true, custom_bg = "lualine" },
-				neotest = true,
-				noice = true,
-				notify = true,
-				semantic_tokens = true,
-				telescope = true,
-				treesitter = true,
-				which_key = true,
+			styles = {
+				bold = true,
+				italic = true,
+				transparency = true,
 			},
+			enable = {
+				terminal = true,
+			},
+			disable = {},
 		},
 	},
 	{
 		"LazyVim/LazyVim",
 		opts = {
-			colorscheme = "catppuccin",
+			colorscheme = "rose-pine",
 		},
 	},
 }

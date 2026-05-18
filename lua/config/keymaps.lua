@@ -8,9 +8,14 @@
 
 --fix c+/ open terminal
 -- Map Ctrl+/ to open terminal
+vim.o.shell = "/usr/bin/fish"
 vim.keymap.set({ "n", "t" }, "<C-/>", function()
-	Snacks.terminal()
-end, { desc = "Open terminal" })
+	local dir = vim.fn.expand("%:p:h")
+	if dir == "" then
+		dir = vim.fn.getcwd()
+	end
+	Snacks.terminal(nil, { cwd = dir })
+end, { desc = "Open terminal in current file's directory" })
 
 vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { desc = "Rename" })
 
@@ -24,3 +29,8 @@ require("mini.surround").setup({
 
 vim.keymap.set("v", "<C-\\>", "gc", { desc = "Toggle comment on selection", remap = true })
 vim.keymap.set("n", "<C-\\>", "gcc", { desc = "Toggle comment current line", remap = true })
+
+vim.keymap.set("i", "qq", "<Esc>", { noremap = true })
+
+vim.keymap.set("n", "Q", "<Nop>", { desc = "Disabled" })
+vim.keymap.set("v", "Q", "<Nop>", { desc = "Disabled" })

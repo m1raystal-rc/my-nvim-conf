@@ -3,7 +3,7 @@ return {
 	config = function()
 		require("screenkey").setup({
 			win_opts = {
-				row = vim.o.lines,
+				row = vim.o.lines - 1,
 				col = vim.o.columns - 5,
 				relative = "editor",
 				anchor = "SE",

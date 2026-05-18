@@ -155,81 +155,6 @@ return {
 		opts = {},
 	},
 	{
-		"nvim-lualine/lualine.nvim",
-		dependencies = {
-			"nvim-tree/nvim-web-devicons",
-			"AndreM222/copilot-lualine",
-		},
-		opts = {
-			options = {
-				theme = "auto",
-				always_divide_middle = false,
-				component_separators = { left = "", right = "" },
-				section_separators = { left = "", right = "" },
-			},
-			sections = {
-				lualine_a = { "mode" },
-				lualine_b = { "branch", "diff", "diagnostics" },
-				lualine_c = { "filename" },
-				lualine_x = {},
-				lualine_y = { "encoding", "fileformat", "filetype", "progress" },
-				lualine_z = { "location" },
-			},
-      -- stylua: ignore
-      winbar = {
-        lualine_a = { "filename", },
-        lualine_b = { { function() return " " end, color = "Comment", }, },
-        lualine_x = { "lsp_status", },
-      },
-			inactive_winbar = {
-        -- Always show winbar
-        -- stylua: ignore
-        lualine_b = { function() return " " end, },
-			},
-		},
-		config = function(_, opts)
-			local mocha = require("catppuccin.palettes").get_palette("mocha")
-
-			local function show_macro_recording()
-				local recording_register = vim.fn.reg_recording()
-				if recording_register == "" then
-					return ""
-				else
-					return "󰑋 " .. recording_register
-				end
-			end
-
-			local macro_recording = {
-				show_macro_recording,
-				color = { fg = "#333333", bg = mocha.red },
-				separator = { left = "", right = "" },
-				padding = 0,
-			}
-
-			local copilot = {
-				"copilot",
-				show_colors = true,
-				symbols = {
-					status = {
-						hl = {
-							enabled = mocha.green,
-							sleep = mocha.overlay0,
-							disabled = mocha.surface0,
-							warning = mocha.peach,
-							unknown = mocha.red,
-						},
-					},
-					spinner_color = mocha.mauve,
-				},
-			}
-
-			table.insert(opts.sections.lualine_x, 1, macro_recording)
-			table.insert(opts.sections.lualine_c, copilot)
-
-			require("lualine").setup(opts)
-		end,
-	},
-	{
 		"romgrk/barbar.nvim",
 		version = false, -- optional: only update when a new 1.x version is released
 		dependencies = {
@@ -402,5 +327,190 @@ return {
 		version = "*",
 		event = "BufReadPost",
 		config = true,
+	},
+	{
+		"nvim-lualine/lualine.nvim",
+		dependencies = {
+			"nvim-tree/nvim-web-devicons",
+			"AndreM222/copilot-lualine",
+			"nvim-treesitter/nvim-treesitter",
+			"mfussenegger/nvim-dap",
+			"rcarriga/nvim-dap-ui",
+		},
+		opts = {
+			options = {
+				theme = "auto",
+				always_divide_middle = false,
+				component_separators = { left = "", right = "" },
+				section_separators = { left = "", right = "" },
+			},
+			sections = {
+				lualine_a = { "mode" },
+				lualine_b = { "branch", "diff", "diagnostics" },
+				lualine_c = {
+					"filename",
+					-- 当前函数名
+					{
+						function()
+							local node = vim.treesitter.get_node()
+							if not node then
+								return ""
+							end
+							while node and not node:type():match("function") do
+								node = node:parent()
+							end
+							if node then
+								local func_name = node:field("name")[1]
+								if func_name then
+									return "󰊕 " .. vim.treesitter.get_node_text(func_name, 0)
+								end
+							end
+							return ""
+						end,
+						color = { fg = "#ffccd6" }, -- 深灰
+					},
+				},
+				lualine_x = {},
+				lualine_y = {
+					{
+						"encoding",
+						color = { fg = "#ffccd6" }, -- 深灰
+					},
+					{
+						"fileformat",
+						color = { fg = "#ffccd6" }, -- 深灰
+					},
+					{
+						"filetype",
+						icon = { "󰈢 ", align = "left" },
+						colored = false,
+						color = { fg = "#ffccd6" }, -- 深紫
+					},
+					{
+						"progress",
+						color = { fg = "#ffccd6" }, -- 深蓝灰
+					},
+					{
+						function()
+							local hostname = vim.loop.os_gethostname()
+							return hostname:match("[^.]+")
+						end,
+					},
+					{
+						function()
+							local term = os.getenv("TERM") or ""
+							if term:match("xterm") then
+								return "xterm"
+							elseif term:match("tmux") then
+								return "tmux"
+							elseif term:match("screen") then
+								return "screen"
+							else
+								return term ~= "" and term or "term"
+							end
+						end,
+						icon = "󰏗",
+					},
+				},
+				lualine_z = {
+					{
+						"location",
+					},
+					-- 当前目录
+					{
+						function()
+							local filepath = vim.api.nvim_buf_get_name(0)
+							if filepath == "" then
+								return " nil"
+							end
+							local dir = vim.fn.fnamemodify(filepath, ":h")
+							local home = os.getenv("HOME")
+							dir = dir:gsub(home, "~")
+							local parts = vim.split(dir, "/")
+							if #parts > 2 then
+								return " " .. parts[#parts - 1] .. "/" .. parts[#parts]
+							elseif #parts == 2 then
+								return " " .. parts[#parts]
+							else
+								return " " .. dir
+							end
+						end,
+					},
+					-- 日期
+					{
+						function()
+							return os.date("%m/%d")
+						end,
+						icon = "󰃭",
+					},
+					-- 时间（Nerd Font 钟表图标）
+					{
+						function()
+							return os.date("%H:%M")
+						end,
+						icon = "", -- Nerd Font 钟表图标
+					},
+				},
+			},
+			extensions = { "nvim-dap-ui" },
+			winbar = {
+				lualine_a = { "filename" },
+				lualine_b = { {
+					function()
+						return " "
+					end,
+					color = "Comment",
+				} },
+				lualine_x = { "lsp_status" },
+			},
+			inactive_winbar = {
+				lualine_b = {
+					function()
+						return " "
+					end,
+				},
+			},
+		},
+		config = function(_, opts)
+			local mocha = require("catppuccin.palettes").get_palette("mocha")
+
+			local function show_macro_recording()
+				local recording_register = vim.fn.reg_recording()
+				if recording_register == "" then
+					return ""
+				else
+					return "󰑋 " .. recording_register
+				end
+			end
+
+			local macro_recording = {
+				show_macro_recording,
+				color = { fg = "#1A1A1A", bg = mocha.red },
+				separator = { left = "", right = "" },
+				padding = 0,
+			}
+
+			local copilot = {
+				"copilot",
+				show_colors = true,
+				symbols = {
+					status = {
+						hl = {
+							enabled = mocha.green,
+							sleep = mocha.overlay0,
+							disabled = mocha.surface0,
+							warning = mocha.peach,
+							unknown = mocha.red,
+						},
+					},
+					spinner_color = mocha.mauve,
+				},
+			}
+
+			table.insert(opts.sections.lualine_x, 1, macro_recording)
+			table.insert(opts.sections.lualine_c, copilot)
+
+			require("lualine").setup(opts)
+		end,
 	},
 }
