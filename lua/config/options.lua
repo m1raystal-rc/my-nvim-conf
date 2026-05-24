@@ -13,25 +13,28 @@ vim.opt.listchars = { tab = "|-", trail = "-" }
 vim.o.winborder = "rounded"
 vim.g.neovide_font_antialiasing = "standard"
 
--- Window
-vim.defer_fn(function()
-	vim.api.nvim_set_hl(0, "Normal", { bg = "NONE" })
-	vim.api.nvim_set_hl(0, "NormalFloat", { bg = "NONE" })
-	vim.api.nvim_set_hl(0, "LineNr", { bg = "NONE" })
-	vim.api.nvim_set_hl(0, "CursorLine", { bg = "NONE" })
-	vim.api.nvim_set_hl(0, "CursorLineNr", { bg = "NONE" })
-end, 50)
-
 -- for the dashboard color
 vim.defer_fn(function()
 	vim.api.nvim_set_hl(0, "SnacksDashboardHeader", { fg = "#FFB7C5" })
 	vim.api.nvim_set_hl(0, "SnacksDashboardTitle", { fg = "#FFB7C5" })
 end, 1)
 
+vim.api.nvim_create_autocmd("ColorScheme", {
+	pattern = "*",
+	callback = function()
+		vim.api.nvim_set_hl(0, "FloatBorder", { fg = "#FFB7C5" })
+		vim.api.nvim_set_hl(0, "Normal", { bg = "NONE" })
+		vim.api.nvim_set_hl(0, "NormalFloat", { bg = "NONE" })
+		vim.api.nvim_set_hl(0, "LineNr", { bg = "NONE" })
+		vim.api.nvim_set_hl(0, "CursorLine", { bg = "NONE" })
+		vim.api.nvim_set_hl(0, "CursorLineNr", { bg = "NONE" })
+		vim.api.nvim_set_hl(0, "SnacksDashboardHeader", { fg = "#FFB7C5" })
+		vim.api.nvim_set_hl(0, "SnacksDashboardTitle", { fg = "#FFB7C5" })
+	end,
+})
+
 -- 强制覆盖所有颜色为粉色系（深浅分明版）
 vim.defer_fn(function()
-	-- 樱花粉色边框
-	vim.api.nvim_set_hl(0, "FloatBorder", { fg = "#FFB7C5" })
 	-- 基础高亮组
 	vim.api.nvim_set_hl(0, "Keyword", { fg = "#D6A2E8", bold = true }) -- 关键字：浅紫粉（原色）
 	vim.api.nvim_set_hl(0, "Function", { fg = "#ff99b1" }) -- 中深粉
@@ -86,4 +89,4 @@ vim.defer_fn(function()
 
 	-- Telescope 匹配高亮（用中深粉醒目）
 	vim.cmd([[highlight! TelescopeMatching guifg=#FF85A1 gui=bold]])
-end, 300)
+end, 100)

@@ -339,7 +339,7 @@ return {
 		},
 		opts = {
 			options = {
-				theme = "auto",
+				theme = "rose-pine",
 				always_divide_middle = false,
 				component_separators = { left = "", right = "" },
 				section_separators = { left = "", right = "" },
@@ -474,6 +474,22 @@ return {
 		config = function(_, opts)
 			local mocha = require("catppuccin.palettes").get_palette("mocha")
 
+			opts.options.theme = {
+				normal = {
+					a = { fg = mocha.crust, bg = mocha.pink, gui = "bold" },
+					b = { fg = mocha.subtext1, bg = mocha.surface0 },
+					c = { fg = mocha.subtext0, bg = mocha.mantle },
+				},
+				insert = { a = { fg = mocha.crust, bg = mocha.green, gui = "bold" } },
+				visual = { a = { fg = mocha.crust, bg = mocha.mauve, gui = "bold" } },
+				replace = { a = { fg = mocha.crust, bg = mocha.red, gui = "bold" } },
+				command = { a = { fg = mocha.crust, bg = mocha.sky, gui = "bold" } },
+				inactive = {
+					a = { fg = mocha.overlay0, bg = mocha.mantle },
+					b = { fg = mocha.overlay0, bg = mocha.mantle },
+					c = { fg = mocha.overlay0, bg = mocha.mantle },
+				},
+			}
 			local function show_macro_recording()
 				local recording_register = vim.fn.reg_recording()
 				if recording_register == "" then

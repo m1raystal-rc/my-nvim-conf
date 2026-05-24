@@ -30,7 +30,7 @@ return {
 			--return ""
 			--end
 
-			if after_one:match("[%p]") and not after_one:match("[(<{\\[]") then
+			if after_one:match("[%p]") then
 				vim.schedule(function()
 					vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Right>", true, false, true), "n", false)
 				end)
