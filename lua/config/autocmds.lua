@@ -14,11 +14,7 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
 	callback = function()
 		local filetype = vim.bo.filetype
 		if filetype and filetype ~= "" and filetype ~= "text" then
-			-- 保存当前窗口
-			local current_win = vim.api.nvim_get_current_win()
-			vim.cmd("Outline")
-			-- 切换回原来的窗口
-			vim.api.nvim_set_current_win(current_win)
+			require("outline").open_outline({ focus_outline = false })
 		end
 	end,
 })
