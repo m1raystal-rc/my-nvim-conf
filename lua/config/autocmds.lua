@@ -32,4 +32,29 @@ vim.api.nvim_create_autocmd("VimEnter", {
 	end,
 })
 
+vim.api.nvim_create_autocmd("BufAdd", {
+	pattern = "*",
+	callback = function()
+		local new_buf = tonumber(vim.fn.expand("<abuf>"))
+		if vim.bo[new_buf].buftype ~= "" or not vim.fn.buflisted(new_buf) then
+			return
+		end
+
+		vim.schedule(function()
+			if vim.api.nvim_get_current_buf() ~= new_buf then
+				return
+			end
+
+			for _, b in ipairs(vim.api.nvim_list_bufs()) do
+				if b ~= new_buf and vim.bo[b].buftype == "" and vim.fn.buflisted(b) == 1 and vim.api.nvim_buf_is_valid(b) then
+					pcall(function()
+						vim.bo[b].modified = false
+						vim.api.nvim_buf_delete(b, { force = true })
+					end)
+				end
+			end
+		end)
+	end,
+})
+
 vim.env.PATH = vim.env.PATH .. ":/home/m1racleur/.opencode/bin"
